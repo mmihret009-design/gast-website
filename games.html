@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>GAST Games</title>
+  <link rel="icon" href="favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&family=Syne:wght@800&display=swap"
+    rel="stylesheet"
+  >
+
+  <script
+    type="module"
+    src="https://cdn.spline.design/@splinetool/viewer@2.0.38/build/spline-viewer.js">
+  </script>
+
+
+  <style>
+
+    /* =========================================================
+       RESET
+       ========================================================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      background: #000;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+
+    /* ==========================================
+       BEAUTIFUL LOADING SCREEN
+       ========================================== */
+
+    #spline-loader {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 10000;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      align-items: center;
+
+      background-color: #0D0F14;
+
+      opacity: 1;
+
+      visibility: visible;
+
+      transition:
+        opacity 0.5s ease,
+        visibility 0.5s ease;
+
+    }
+
+
+    .loader-hidden {
+
+      opacity: 0 !important;
+
+      visibility: hidden !important;
+
+    }
+
+
+    .loader-title {
+
+      font-family: "Syne", sans-serif;
+
+      font-size: 3rem;
+
+      font-weight: 800;
+
+      letter-spacing: 5px;
+
+      color: #00ff87;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .loader-text {
+
+      font-size: 0.8rem;
+
+      font-weight: 700;
+
+      letter-spacing: 4px;
+
+      text-transform: uppercase;
+
+      color: #888888;
+
+      margin-bottom: 25px;
+
+    }
+
+
+    .loader-dots {
+
+      display: flex;
+
+      gap: 8px;
+
+    }
+
+
+    .loader-dots span {
+
+      width: 7px;
+
+      height: 7px;
+
+      border-radius: 50%;
+
+      background-color: #00ff87;
+
+      animation:
+        loaderPulse
+        1.2s
+        infinite
+        ease-in-out;
+
+    }
+
+
+    .loader-dots span:nth-child(1) {
+
+      animation-delay: 0s;
+
+    }
+
+
+    .loader-dots span:nth-child(2) {
+
+      animation-delay: 0.15s;
+
+    }
+
+
+    .loader-dots span:nth-child(3) {
+
+      animation-delay: 0.3s;
+
+    }
+
+
+    @keyframes loaderPulse {
+
+      0%,
+      80%,
+      100% {
+
+        transform: scale(0.5);
+
+        opacity: 0.35;
+
+      }
+
+      40% {
+
+        transform: scale(1);
+
+        opacity: 1;
+
+      }
+
+    }
+
+
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    .games-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 90px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4%;
+      z-index: 1000;
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(5,5,5,0.85) 0%,
+          rgba(5,5,5,0) 100%
+        );
+      pointer-events: none;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      pointer-events: auto;
+      text-decoration: none;
+    }
+
+    .brand-logo-text {
+      font-size: 1.55rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: #fff;
+      text-transform: uppercase;
+      line-height: 1;
+      transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease;
+    }
+
+    .brand-logo-text span {
+      font-weight: 400;
+      color: #777;
+      margin-left: 5px;
+    }
+
+    .brand-logo:hover .brand-logo-text {
+      transform: scale(1.04);
+      text-shadow: 0 0 20px rgba(255,255,255,0.35);
+    }
+
+    .nav-links-menu {
+      display: flex;
+      gap: 55px;
+      list-style: none;
+      pointer-events: auto;
+      transform: translateY(-20px) translateX(-1px);
+    }
+
+    .nav-item {
+      text-decoration: none;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Inter,
+        Helvetica,
+        Arial,
+        sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #e5e5e5;
+      position: relative;
+      padding: 4px 0;
+      transition: color 0.2s ease;
+    }
+
+    .nav-item:hover {
+      color: #00ff87;
+    }
+
+    .nav-item::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #00ff87;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition:
+        transform 0.3s
+        cubic-bezier(0.45, 0, 0.55, 1);
+    }
+
+    .nav-item:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+
+    /* =========================================================
+       FIRST SECTION — SPLINE
+       ========================================================= */
+
+    .games-hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      background: #000;
+      contain: layout paint;
+    }
+
+    .games-spline {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      contain: strict;
+      isolation: isolate;
+      transform: translateZ(0);
+    }
+
+    .games-spline spline-viewer {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: pan-y;
+      contain: strict;
+    }
+
+    .spline-logo-hider {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 170px;
+      height: 58px;
+      background: #000;
+      z-index: 20;
+      pointer-events: auto;
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 768px) {
+
+      .games-navbar {
+        height: 70px;
+        padding: 0 4%;
+        background: rgba(0,0,0,0.85);
+      }
+
+      .brand-logo-text {
+        font-size: 1rem;
+      }
+
+      .nav-links-menu {
+        gap: 12px;
+        transform: translateY(-10px);
+      }
+
+      .nav-item {
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+      }
+
+      .loader-title {
+        letter-spacing: -5px;
+      }
+
+      .loader-bottom {
+        margin-top: 45px;
+      }
+
+      .loader-brand {
+        font-size: 10px;
+      }
+
+      .loader-version {
+        font-size: 8px;
+      }
+
+      .loader-subtitle {
+        font-size: 8px;
+        letter-spacing: 4px;
+      }
+    }
+
+
+    /* =========================================================
+       GAMES ROSTER
+       ========================================================= */
+
+    .games-roster {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .roster-background {
+      position: absolute;
+      inset: 0;
+    }
+
+    .roster-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .roster-bg.active {
+      opacity: 1;
+    }
+
+    .roster-dark {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(0,0,0,0.88) 0%,
+          rgba(0,0,0,0.58) 32%,
+          rgba(0,0,0,0.12) 75%,
+          rgba(0,0,0,0.25) 100%
+        );
+      z-index: 2;
+    }
+
+    .viewfinder {
+      position: absolute;
+      left: -210px;
+      top: 50%;
+      width: 480px;
+      height: 480px;
+      transform: translateY(-50%);
+      z-index: 5;
+    }
+
+    .viewfinder-circle {
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 50%;
+      box-shadow: 0 0 40px rgba(0,255,135,0.08);
+    }
+
+    .viewfinder-circle::before {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border: 1px solid rgba(0,255,135,0.22);
+      border-radius: 50%;
+    }
+
+    .viewfinder-icon {
+      position: absolute;
+      right: 55px;
+      top: 50%;
+      width: 210px;
+      height: 210px;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    .viewfinder-icon img {
+      width: 175px;
+      height: 175px;
+      object-fit: contain;
+      transition:
+        transform 0.8s cubic-bezier(0.65,0,0.35,1),
+        opacity 0.5s ease;
+      filter: drop-shadow(0 0 15px rgba(0,0,0,0.6));
+    }
+
+    .game-info {
+      position: absolute;
+      left: 25%;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      max-width: 420px;
+      color: #fff;
+    }
+
+    .game-counter {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: #00ff87;
+      margin-bottom: 14px;
+    }
+
+    .game-info h2 {
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .game-info p {
+      max-width: 360px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #d0d0d0;
+    }
+
+    @media (max-width: 768px) {
+
+      .viewfinder {
+        left: -300px;
+        width: 450px;
+        height: 450px;
+      }
+
+      .game-info {
+        left: 12%;
+        top: 68%;
+        max-width: 75%;
+      }
+
+      .game-info h2 {
+        font-size: 2.5rem;
+      }
+
+      .game-info p {
+        font-size: 13px;
+      }
+
+    }
+
+
+    /* ===============================
+       GAST ATTRACTIONS SECTION
+       ================================ */
+
+    .attractions-section {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+      background: #0d0f15;
+    }
+
+    .timeline-panel {
+      width: 35%;
+      height: 100%;
+      background: #0d0f15;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .timeline-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .attraction-item {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #3d4048;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      padding: 10px 30px;
+      text-align: left;
+      position: relative;
+      transition:
+        transform 0.7s cubic-bezier(.22, 1, .36, 1),
+        color 0.7s ease,
+        opacity 0.7s ease;
+    }
+
+    .number {
+      min-width: 55px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding-top: 8px;
+      transition: 0.6s ease;
+    }
+
+    .item-content {
+      overflow: hidden;
+    }
+
+    .attraction-item h2 {
+      margin: 0;
+      font-size: clamp(18px, 2vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      transition: 0.6s ease;
+    }
+
+    .attraction-item p {
+      margin: 0;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #9da0aa;
+      transform: translateY(-10px);
+      transition:
+        max-height 0.6s ease,
+        opacity 0.5s ease,
+        margin 0.6s ease,
+        transform 0.6s ease;
+    }
+
+    .attraction-item.active {
+      color: #ffffff;
+      transform: translateX(12px) scale(1.03);
+    }
+
+    .attraction-item.active::before {
+      content: ">";
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 400;
+      position: absolute;
+      left: 10px;
+      top: 12px;
+    }
+
+    .attraction-item.active h2,
+    .attraction-item.active .number {
+      color: #ffffff;
+    }
+
+    .attraction-item.active p {
+      max-height: 80px;
+      opacity: 1;
+      margin-top: 8px;
+      transform: translateY(0);
+    }
+
+    .timeline-progress {
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      bottom: 45px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: #ffffff;
+    }
+
+    .progress-bar.running {
+      animation: gastProgress 15s linear forwards;
+    }
+
+    @keyframes gastProgress {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    .image-panel {
+      width: 65%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      background: #050505;
+    }
+
+    .attraction-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .attraction-image.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .attraction-image.reveal {
+      opacity: 1;
+      z-index: 5;
+      animation: gastShutterReveal 1.2s cubic-bezier(.77, 0, .18, 1) forwards;
+    }
+
+    @keyframes gastShutterReveal {
+      from { clip-path: inset(0 0 0 100%); }
+      to { clip-path: inset(0 0 0 0); }
+    }
+
+    @media (max-width: 800px) {
+
+      .attractions-section {
+        flex-direction: column-reverse;
+      }
+
+      .timeline-panel {
+        width: 100%;
+        height: 40%;
+      }
+
+      .image-panel {
+        width: 100%;
+        height: 60%;
+      }
+
+      .timeline-list {
+        gap: 5px;
+      }
+
+      .attraction-item {
+        padding: 6px 20px;
+      }
+
+      .attraction-item h2 {
+        font-size: 16px;
+      }
+
+      .attraction-item p {
+        font-size: 11px;
+      }
+
+    }
+
+
+    /* =====================================================
+       GAST GOLF CLUB
+       ===================================================== */
+
+    .golf-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+      background: #0d0f15;
+    }
+
+    .golf-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url("GOLF.png");
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+    }
+
+    .golf-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(2, 8, 5, 0.88) 0%,
+          rgba(2, 8, 5, 0.60) 34%,
+          rgba(2, 8, 5, 0.12) 70%,
+          rgba(2, 8, 5, 0.30) 100%
+        );
+    }
+
+    .golf-content {
+      position: absolute;
+      left: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      color: white;
+      max-width: 560px;
+    }
+
+    .golf-label {
+      margin-bottom: 25px;
+      font-size: 17px;
+      translate: -10px;
+      font-weight: 800;
+      letter-spacing: 7px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .golf-content h2 {
+      margin: 0 0 28px;
+      font-size: clamp(4rem, 6.2vw, 7rem);
+      font-weight: 900;
+      line-height: 0.84;
+      letter-spacing: -4px;
+      color: #f5f5f5;
+    }
+
+    .golf-content h2 span {
+      color: #6fa9e6;
+    }
+
+    .golf-content p {
+      max-width: 420px;
+      font-size: 17px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .golf-interaction {
+      position: absolute;
+      left: 67%;
+      top: 55%;
+      width: 620px;
+      height: 620px;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .golf-cta {
+      position: absolute;
+      left: 50%;
+      top: 35%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      width: 100%;
+      text-align: center;
+      opacity: 0;
+      transition:
+        opacity 0.4s ease 0.3s,
+        transform 0.6s cubic-bezier(.22,1,.36,1);
+      pointer-events: none;
+    }
+
+    .golf-interaction:hover .golf-cta {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .golf-member-text {
+      margin-bottom: 16px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 5px;
+      color: white;
+    }
+
+    .golf-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 30px;
+      background: #1d75d3;
+      border: none;
+      color: white;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      box-shadow: 0 10px 30px rgba(20,100,210,0.35);
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+    }
+
+    .golf-button:hover {
+      transform: translateY(-3px);
+      background: #338cec;
+    }
+
+    .golf-ball {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 420px;
+      height: 420px;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .golf-half {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      height: 320px;
+      width: auto;
+      transform-origin: center center;
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.28));
+      transition: transform 1.1s cubic-bezier(.22,1,.36,1);
+    }
+
+    .golf-left {
+      transform: translate(-69%, -50%) rotatez(-90deg);
+    }
+
+    .golf-right {
+      transform: translate(-22%, -50%) rotatez(90deg);
+    }
+
+    .golf-interaction:hover .golf-left {
+      transform:
+        translate(calc(-52% - 120px), calc(-52% + 45px))
+        translate(-80px)
+        rotate(-122deg);
+    }
+
+    .golf-interaction:hover .golf-right {
+      transform:
+        translate(calc(-52% + 120px), calc(-52% + 45px))
+        translate(80px)
+        rotate(122deg);
+    }
+
+    @media (max-width: 1100px) {
+
+      .golf-interaction {
+        left: 72%;
+        transform: translate(-50%, -50%) scale(0.85);
+      }
+
+    }
+
+    @media (max-width: 800px) {
+
+      .golf-section {
+        min-height: 800px;
+      }
+
+      .golf-content {
+        left: 7%;
+        top: 25%;
+        max-width: 86%;
+      }
+
+      .golf-content h2 {
+        font-size: clamp(3.5rem, 14vw, 5rem);
+      }
+
+      .golf-content p {
+        font-size: 14px;
+      }
+
+      .golf-interaction {
+        left: 50%;
+        top: 60%;
+        transform: translate(-50%, -36%) scale(0.77);
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+
+  <!-- ==========================================
+       LOADING SCREEN
+       ========================================== -->
+
+  <div id="spline-loader">
+
+    <div class="loader-title">
+      GAST
+    </div>
+
+    <div class="loader-text">
+      Entering the experience
+    </div>
+
+    <div class="loader-dots">
+
+      <span></span>
+
+      <span></span>
+
+      <span></span>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================================
+       NAVIGATION
+       ========================================================= -->
+
+  <nav class="games-navbar">
+
+    <a
+      href="games.html"
+      class="brand-logo"
+    >
+
+      <div class="brand-logo-text">
+        GAST
+        <span>GAMES</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links-menu">
+
+      <li>
+        <a href="INDEX.HTML" class="nav-item">
+          Home
+        </a>
+      </li>
+
+      <li>
+        <a href="cinema.html" class="nav-item">
+          Cinema
+        </a>
+      </li>
+
+      <li>
+        <a href="games.html" class="nav-item">
+          Games
+        </a>
+      </li>
+
+      <li>
+        <a href="dining.html" class="nav-item">
+          Dining
+        </a>
+      </li>
+
+      <li>
+        <a href="https://gym.gastmall.net/" class="nav-item">
+          Gym
+        </a>
+      </li>
+
+      <li>
+        <a href="developers.html" class="nav-item">
+          Developers
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+
+
+  <!-- =========================================================
+       FIRST SECTION — SPLINE
+       ========================================================= -->
+
+  <section class="games-hero">
+
+    <div class="games-spline">
+
+      <spline-viewer
+        id="gamesSpline"
+        url="https://prod.spline.design/Lca3VRivH4ItB7Vr/scene.splinecode"
+        loading="eager">
+      </spline-viewer>
+
+    </div>
+
+    <div class="spline-logo-hider"></div>
+
+  </section>
+
+
+
+  <section class="games-roster">
+
+    <audio
+      id="gameMusic"
+      src="GAME.mp3"
+      preload="auto"
+      loop>
+    </audio>
+
+    <div class="roster-background">
+
+      <div
+        class="roster-bg active"
+        style="background-image: url('BOWLING.png');">
+      </div>
+
+      <div
+        class="roster-bg"
+        style="background-image: url('LASER TAG.png');">
+      </div>
+
+      <div
+        class="roster-bg"
+        style="background-image: url('KARAOKE.png');">
+      </div>
+
+      <div
+        class="roster-bg"
+        style="background-image: url('ROLLER SKATE.png');">
+      </div>
+
+      <div
+        class="roster-bg"
+        style="background-image: url('TRAMPOLINE BASKETBALL.png');">
+      </div>
+
+    </div>
+
+    <div class="roster-dark"></div>
+
+    <div class="viewfinder">
+
+      <div class="viewfinder-circle"></div>
+
+      <div class="viewfinder-icon">
+
+        <img
+          src="PINS.png"
+          id="gameIcon"
+          alt="Bowling">
+
+      </div>
+
+    </div>
+
+    <div class="game-info">
+
+      <div
+        class="game-counter"
+        id="gameCounter">
+        01 / 05
+      </div>
+
+      <h2 id="gameTitle">
+        BOWLING
+      </h2>
+
+      <p id="gameDescription">
+        Strike, compete and make every frame count.
+      </p>
+
+    </div>
+
+  </section>
+
+
+
+  <section
+    class="attractions-section"
+    id="attractions">
+
+    <div class="timeline-panel">
+
+      <div class="timeline-list">
+
+        <button
+          class="attraction-item active"
+          data-index="0">
+
+          <span class="number">
+            01 /
+          </span>
+
+          <div class="item-content">
+
+            <h2>
+              CLIMBING WALL
+            </h2>
+
+            <p>
+              Reach new heights. Challenge yourself.
+            </p>
+
+          </div>
+
+        </button>
+
+
+        <button
+          class="attraction-item"
+          data-index="1">
+
+          <span class="number">
+            02 /
+          </span>
+
+          <div class="item-content">
+
+            <h2>
+              NINJA WARRIOR
+            </h2>
+
+            <p>
+              The ultimate course. Challenge. Conquer. Repeat.
+            </p>
+
+          </div>
+
+        </button>
+
+
+        <button
+          class="attraction-item"
+          data-index="2">
+
+          <span class="number">
+            03 /
+          </span>
+
+          <div class="item-content">
+
+            <h2>
+              ARCADE ZONE
+            </h2>
+
+            <p>
+              Play harder. Score bigger. Never stop.
+            </p>
+
+          </div>
+
+        </button>
+
+
+        <button
+          class="attraction-item"
+          data-index="3">
+
+          <span class="number">
+            04 /
+          </span>
+
+          <div class="item-content">
+
+            <h2>
+              MIRROR MAZE
+            </h2>
+
+            <p>
+              Lose your way. Find the impossible.
+            </p>
+
+          </div>
+
+        </button>
+
+      </div>
+
+      <div class="timeline-progress">
+
+        <div class="progress-bar"></div>
+
+      </div>
+
+    </div>
+
+
+    <div class="image-panel">
+
+      <img
+        class="attraction-image active"
+        src="climbing.png"
+        alt="GAST Climbing Wall"
+        loading="lazy"
+        decoding="async"
+      >
+
+      <img
+        class="attraction-image"
+        src="NINJA.png"
+        alt="GAST Ninja Warrior"
+        loading="lazy"
+        decoding="async"
+      >
+
+      <img
+        class="attraction-image"
+        src="ARCADE.png"
+        alt="GAST Arcade Zone"
+        loading="lazy"
+        decoding="async"
+      >
+
+      <img
+        class="attraction-image"
+        src="mirror.png"
+        alt="GAST Mirror Maze"
+        loading="lazy"
+        decoding="async"
+      >
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       SECTION 4 — GAST GOLF CLUB
+       ========================================================= -->
+
+  <section class="golf-section">
+
+    <div class="golf-bg"></div>
+
+    <div class="golf-overlay"></div>
+
+    <div class="golf-content">
+
+      <div class="golf-label">
+        GAST GOLF CLUB
+      </div>
+
+      <h2>
+        PRECISION<br>
+        MEETS<br>
+        <span>PRESTIGE.</span>
+      </h2>
+
+      <p>
+        Where every swing becomes a new standard
+        of golf at GAST.
+      </p>
+
+    </div>
+
+
+    <div class="golf-interaction">
+
+      <div class="golf-hidden-content">
+
+        <div class="golf-fairway">
+
+          <div class="golf-flag">
+
+            <div class="golf-flag-pole"></div>
+
+            <div class="golf-flag-cloth"></div>
+
+          </div>
+
+        </div>
+
+
+        <div class="golf-cta">
+
+          <div class="golf-member-text">
+            BECOME A MEMBER
+          </div>
+
+          <a
+            href="https://t.me/gastgolfclub"
+            class="golf-button">
+            JOIN NOW →
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="golf-ball">
+
+        <img
+          src="GOLF BALL.png"
+          class="golf-half golf-left"
+          alt=""
+        >
+
+        <img
+          src="GOLF BALL.png"
+          class="golf-half golf-right"
+          alt=""
+        >
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <script>
+
+
+    /* =========================================================
+       SPLINE LOADING SCREEN
+       ========================================================= */
+
+    const loader =
+      document.getElementById("spline-loader");
+
+    const spline =
+      document.getElementById("gamesSpline");
+
+    let loaderFinished = false;
+
+
+    function finishGamesLoader() {
+
+      if (loaderFinished) return;
+
+      loaderFinished = true;
+
+      if (loader) {
+
+        loader.classList.add("loader-hidden");
+
+        setTimeout(() => {
+
+          if (loader.isConnected) {
+            loader.remove();
+          }
+
+        }, 600);
+
+      }
+
+    }
+
+
+    /*
+       IMPORTANT:
+       The loader now waits for Spline's actual
+       load-complete event.
+
+       There is NO artificial timeout.
+       There is NO preload.
+    */
+
+    spline.addEventListener(
+      "load-complete",
+      finishGamesLoader,
+      {
+        once: true
+      }
+    );
+
+
+
+    /* =========================================================
+       GAMES ROSTER ROTATION
+       ========================================================= */
+
+    const games = [
+
+      {
+        title: "BOWLING",
+
+        description:
+          "Strike, compete and make every frame count.",
+
+        icon: "PINS.PNG"
+      },
+
+      {
+        title: "LASER TAG",
+
+        description:
+          "Enter the arena, lock on your opponents and light up the darkness.",
+
+        icon: "GUNS.PNG"
+      },
+
+      {
+        title: "KARAOKE",
+
+        description:
+          "Grab the microphone, take the stage and own the night.",
+
+        icon: "MICS.PNG"
+      },
+
+      {
+        title: "ROLLER SKATING",
+
+        description:
+          "Glide, spin and experience the rink your way.",
+
+        icon: "ROLLER SHOE.PNG"
+      },
+
+      {
+        title: "TRAMPOLINE BASKETBALL",
+
+        description:
+          "Take flight and turn basketball into something completely different.",
+
+        icon: "BALL.PNG"
+      }
+
+    ];
+
+
+    const backgrounds =
+      document.querySelectorAll(".roster-bg");
+
+    const gameIcon =
+      document.getElementById("gameIcon");
+
+    const gameTitle =
+      document.getElementById("gameTitle");
+
+    const gameDescription =
+      document.getElementById("gameDescription");
+
+    const gameCounter =
+      document.getElementById("gameCounter");
+
+
+    let currentGame = 0;
+
+
+    function changeGame() {
+
+      gameIcon.style.opacity = "0";
+
+      gameIcon.style.transform =
+        "translateY(-120px) rotate(-20deg)";
+
+      gameTitle.style.opacity = "0";
+
+      gameTitle.style.transform =
+        "translateY(20px)";
+
+      gameDescription.style.opacity = "0";
+
+
+      setTimeout(() => {
+
+        currentGame =
+          (currentGame + 1) % games.length;
+
+        const game =
+          games[currentGame];
+
+
+        gameIcon.src =
+          game.icon;
+
+        gameIcon.alt =
+          game.title;
+
+        gameTitle.textContent =
+          game.title;
+
+        gameDescription.textContent =
+          game.description;
+
+        gameCounter.textContent =
+          `0${currentGame + 1} / 0${games.length}`;
+
+
+        backgrounds.forEach(
+          (background, index) => {
+
+            background.classList.toggle(
+              "active",
+              index === currentGame
+            );
+
+          }
+        );
+
+
+        gameIcon.style.transform =
+          "translateY(120px) rotate(20deg)";
+
+        gameIcon.style.opacity = "0";
+
+
+        gameTitle.style.transform =
+          "translateY(20px)";
+
+
+        requestAnimationFrame(() => {
+
+          requestAnimationFrame(() => {
+
+            gameIcon.style.transform =
+              "translateY(0) rotate(0deg)";
+
+            gameIcon.style.opacity = "1";
+
+            gameTitle.style.transform =
+              "translateY(0)";
+
+            gameTitle.style.opacity = "1";
+
+            gameDescription.style.opacity =
+              "1";
+
+          });
+
+        });
+
+      }, 500);
+
+    }
+
+
+    setInterval(changeGame, 10000);
+
+
+
+    /* =========================================================
+       GAST GAMES — SECTION 2 MUSIC
+       ========================================================= */
+
+    const gameSection =
+      document.querySelector(".games-roster");
+
+    const gameMusic =
+      document.getElementById("gameMusic");
+
+
+    gameMusic.volume = 0.05;
+
+
+    let audioReady = false;
+
+
+    function isGamesSectionVisible() {
+
+      const rect =
+        gameSection.getBoundingClientRect();
+
+      return (
+        rect.top < window.innerHeight * 0.6 &&
+        rect.bottom > window.innerHeight * 0.4
+      );
+
+    }
+
+
+    function updateGameMusic() {
+
+      if (!audioReady) return;
+
+
+      if (isGamesSectionVisible()) {
+
+        gameMusic.play().catch(() => {});
+
+      } else {
+
+        gameMusic.pause();
+
+      }
+
+    }
+
+
+    function unlockAudio() {
+
+      if (audioReady) return;
+
+      audioReady = true;
+
+      updateGameMusic();
+
+    }
+
+
+    document.addEventListener(
+      "pointerdown",
+      unlockAudio,
+      {
+        once: true
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      unlockAudio,
+      {
+        once: true
+      }
+    );
+
+
+    window.addEventListener(
+      "scroll",
+      updateGameMusic,
+      {
+        passive: true
+      }
+    );
+
+
+    window.addEventListener(
+      "load",
+      updateGameMusic
+    );
+
+
+
+    /* =========================================================
+       GAST ATTRACTIONS
+       ========================================================= */
+
+    const attractionItems =
+      document.querySelectorAll(
+        ".attraction-item"
+      );
+
+    const attractionImages =
+      document.querySelectorAll(
+        ".attraction-image"
+      );
+
+    const gastProgressBar =
+      document.querySelector(
+        ".progress-bar"
+      );
+
+
+    let currentAttraction = 0;
+
+    let gastInterval;
+
+    const GAST_SLIDE_TIME = 15000;
+
+
+    function changeAttraction(index) {
+
+      if (index === currentAttraction) return;
+
+
+      attractionItems[
+        currentAttraction
+      ].classList.remove("active");
+
+
+      attractionItems[
+        index
+      ].classList.add("active");
+
+
+      const oldImage =
+        attractionImages[
+          currentAttraction
+        ];
+
+      oldImage.classList.remove(
+        "active",
+        "reveal"
+      );
+
+
+      const newImage =
+        attractionImages[index];
+
+
+      newImage.classList.remove(
+        "active",
+        "reveal"
+      );
+
+
+      void newImage.offsetWidth;
+
+
+      newImage.classList.add("reveal");
+
+
+      setTimeout(() => {
+
+        attractionImages.forEach(
+          (image, i) => {
+
+            if (i !== index) {
+
+              image.classList.remove(
+                "active",
+                "reveal"
+              );
+
+            }
+
+          }
+        );
+
+
+        newImage.classList.remove(
+          "reveal"
+        );
+
+        newImage.classList.add(
+          "active"
+        );
+
+      }, 1200);
+
+
+      currentAttraction = index;
+
+      restartGastProgress();
+
+    }
+
+
+    function nextAttraction() {
+
+      const nextIndex =
+        (currentAttraction + 1) %
+        attractionItems.length;
+
+      changeAttraction(nextIndex);
+
+    }
+
+
+    function restartGastProgress() {
+
+      gastProgressBar.classList.remove(
+        "running"
+      );
+
+      void gastProgressBar.offsetWidth;
+
+      gastProgressBar.classList.add(
+        "running"
+      );
+
+    }
+
+
+    function startGastLoop() {
+
+      clearInterval(gastInterval);
+
+      restartGastProgress();
+
+
+      gastInterval = setInterval(
+        nextAttraction,
+        GAST_SLIDE_TIME
+      );
+
+    }
+
+
+    attractionItems.forEach(
+      (item, index) => {
+
+        item.addEventListener(
+          "click",
+          () => {
+
+            changeAttraction(index);
+
+            startGastLoop();
+
+          }
+        );
+
+      }
+    );
+
+
+    startGastLoop();
+
+
+
+    /* =========================================================
+       MOBILE / TAB VISIBILITY PERFORMANCE
+       ========================================================= */
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+
+        if (document.hidden) {
+
+          document.documentElement.style.setProperty(
+            "--gast-page-hidden",
+            "1"
+          );
+
+        } else {
+
+          document.documentElement.style.setProperty(
+            "--gast-page-hidden",
+            "0"
+          );
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

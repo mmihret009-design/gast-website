@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>GAST Entertainment Mall</title>
+  <link rel="icon" href="favicon.png">
+
+  <!-- Exact fonts requested -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Coiny&family=Rubik+Distressed&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+ 
+
+  <!-- Same Spline Viewer version as the working Games page -->
+  <script
+    type="module"
+    src="https://cdn.spline.design/@splinetool/viewer@2.0.38/build/spline-viewer.js">
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      background: #0D0F14;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    body {
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    /* =========================================================
+       NAVIGATION
+       MATCHED TO THE GAMES NAVBAR
+       ========================================================= */
+
+    .games-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 90px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 0 4%;
+
+      z-index: 1000;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(5,5,5,0.85) 0%,
+          rgba(5,5,5,0) 100%
+        );
+
+      pointer-events: none;
+    }
+
+    /* image-logo.png replaces GAST GAMES */
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+
+      pointer-events: auto;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand-logo img {
+      display: block;
+
+      width: 145px;
+      height: auto;
+
+      object-fit: contain;
+
+      transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+    }
+
+    .brand-logo:hover img {
+      transform: scale(1.04);
+
+      filter:
+        drop-shadow(
+          0 0 20px
+          rgba(255,255,255,0.35)
+        );
+    }
+
+    /* Same 55px link gap as Games */
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 55px;
+
+      pointer-events: auto;
+
+      transform:
+        translateY(-20px)
+        translateX(-1px);
+    }
+
+    .nav-links-menu {
+      display: flex;
+
+      gap: 55px;
+
+      list-style: none;
+      pointer-events: auto;
+    }
+
+    .nav-item {
+      text-decoration: none;
+
+      font-family:
+        "Space Grotesk",
+        sans-serif;
+
+      font-size: 1.2rem;
+      font-weight: 700;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      color: #e5e5e5;
+
+      position: relative;
+
+      padding: 4px 0;
+
+      transition:
+        color 0.2s ease;
+    }
+
+    .nav-item:hover {
+      color: #00ff87;
+    }
+
+    .nav-item::after {
+      content: "";
+
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+
+      width: 100%;
+      height: 2px;
+
+      background:
+        #00ff87;
+
+      transform:
+        scaleX(0);
+
+      transform-origin: right;
+
+      transition:
+        transform 0.3s
+        cubic-bezier(
+          0.45,
+          0,
+          0.55,
+          1
+        );
+    }
+
+    .nav-item:hover::after {
+      transform:
+        scaleX(1);
+
+      transform-origin: left;
+    }
+
+    /* Cinema CTA */
+
+    .cinema-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 42px;
+      padding: 10px 17px;
+
+      border: 1px solid #00ff87;
+      border-radius: 3px;
+
+      color: #00ff87;
+      background: rgba(0,255,135,0.06);
+
+      text-decoration: none;
+
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+
+      transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    .cinema-cta:hover {
+      color: #0D0F14;
+      background: #00ff87;
+
+      box-shadow:
+        0 0 25px
+        rgba(0,255,135,0.3);
+
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       SPLINE HOME
+       ========================================================= */
+
+    .home-section {
+      position: relative;
+
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+
+      overflow: hidden;
+
+      background: #0D0F14;
+    }
+
+    .home-spline {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+    }
+
+    .home-spline spline-viewer {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      min-width: 0;
+      min-height: 0;
+
+      touch-action: pan-y;
+    }
+
+    /* Hide Built with Spline badge */
+
+    .spline-logo-hider {
+      position: absolute;
+
+      right: 0;
+      bottom: 0;
+
+      width: 190px;
+      height: 78px;
+
+      background: #0D0F14;
+
+      z-index: 20;
+
+      pointer-events: none;
+    }
+
+    /* =========================================================
+       GAST INFORMATION + LOCATION
+       ========================================================= */
+
+    .location-section {
+      position: relative;
+
+      width: 100%;
+      min-height: 100vh;
+
+      padding: 110px 6vw;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 7vw;
+
+      background: #0D0F14;
+    }
+
+    /* LEFT */
+
+    .location-copy {
+      width: 50%;
+      max-width: 650px;
+    }
+
+    .location-copy h1 {
+      font-family: "Coiny", sans-serif;
+
+      color: #bcbcbc;
+
+      font-size:
+        clamp(
+          2.8rem,
+          5.5vw,
+          5.8rem
+        );
+
+      line-height: 0.88;
+
+      font-weight: 400;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 52px;
+    }
+
+    .location-copy h2 {
+      font-family: "Rubik Distressed", sans-serif;
+
+      color: #bcbcbc;
+
+      font-size:
+        clamp(
+          1.25rem,
+          2.3vw,
+          2.3rem
+        );
+
+      line-height: 1;
+
+      font-weight: 400;
+
+      text-transform: uppercase;
+
+      margin-bottom: 25px;
+    }
+
+    .location-copy p {
+      max-width: 590px;
+
+      color: #8d8d8d;
+
+      font-family: "Space Grotesk", sans-serif;
+
+      font-size: 15px;
+      font-weight: 500;
+
+      line-height: 1.45;
+
+      margin-bottom: 28px;
+    }
+
+    /* CONTACT STRIP — supplied blue torn-paper background */
+
+    .contact-row {
+      width: min(100%, 560px);
+      min-height: 72px;
+
+      display: flex;
+      align-items: stretch;
+
+      overflow: hidden;
+
+      background-image: url("phone-email-bg.png");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .contact-button {
+      width: 50%;
+      min-height: 72px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 9px;
+
+      padding: 8px 12px;
+
+      color: #00121d;
+      background: transparent;
+
+      text-decoration: none;
+
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+
+      white-space: nowrap;
+
+      transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+    }
+
+    .contact-button:hover {
+      transform: scale(1.12);
+      filter: brightness(1.32);
+    }
+
+    .contact-icon {
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    /* =========================================================
+       MAP
+       ========================================================= */
+
+    .location-map {
+      width: 50%;
+      height: 55vh;
+      min-height: 430px;
+
+      overflow: hidden;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+      background: #15181f;
+
+      box-shadow:
+        0 20px 60px
+        rgba(0,0,0,0.35);
+    }
+
+    .location-map iframe {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      border: 0;
+    }
+
+    /* =========================================================
+       MOBILE — SAME NAVBAR BREAKPOINT/SIZING AS GAMES
+       ========================================================= */
+
+    @media (max-width: 768px) {
+
+      .games-navbar {
+        height: 70px;
+
+        padding: 0 4%;
+
+        background:
+          rgba(0,0,0,0.85);
+      }
+
+      .brand-logo img {
+        width: 100px;
+      }
+
+      .nav-right {
+        gap: 12px;
+
+        transform:
+          translateY(-10px);
+      }
+
+      .nav-links-menu {
+        gap: 12px;
+      }
+
+      .nav-item {
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+      }
+
+      .cinema-cta {
+        min-height: 34px;
+        padding: 7px 10px;
+
+        font-size: 0.55rem;
+        letter-spacing: 0.8px;
+      }
+
+      .home-section {
+        height: 100svh;
+        min-height: 520px;
+      }
+
+      .location-section {
+        min-height: auto;
+
+        padding: 80px 7vw;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 55px;
+      }
+
+      .location-copy,
+      .location-map {
+        width: 100%;
+      }
+
+      .location-copy h1 {
+        margin-bottom: 42px;
+      }
+
+      .location-map {
+        height: 55vh;
+        min-height: 350px;
+      }
+
+      .contact-row {
+        width: 100%;
+      }
+
+      .contact-button {
+        font-size: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      .brand-logo img {
+        width: 85px;
+      }
+
+      .nav-right {
+        gap: 7px;
+      }
+
+      .nav-links-menu {
+        gap: 7px;
+      }
+
+      .nav-item {
+        font-size: 0.52rem;
+        letter-spacing: 0.5px;
+      }
+
+      .cinema-cta {
+        min-height: 30px;
+        padding: 6px 7px;
+
+        font-size: 0.48rem;
+        letter-spacing: 0.4px;
+      }
+
+      .spline-logo-hider {
+        width: 165px;
+        height: 72px;
+      }
+
+      .contact-button {
+        min-height: 62px;
+        font-size: 8px;
+        padding: 6px 5px;
+      }
+
+      .contact-row {
+        min-height: 62px;
+      }
+
+      .contact-icon {
+        font-size: 17px;
+      }
+    }
+
+    /* =========================================================
+       BROWSER PERFORMANCE OPTIMIZATION
+       ========================================================= */
+
+    /*
+       Keep the 3D layer isolated so the browser does not have
+       to repaint unrelated sections when Spline animates.
+    */
+    .home-spline {
+      contain: strict;
+      isolation: isolate;
+    }
+
+    /*
+       The location section is below the first viewport.
+       Do not spend paint work on it while the user is
+       looking at the Spline hero.
+    */
+    .location-section {
+      content-visibility: auto;
+      contain-intrinsic-size: 100vh;
+    }
+
+    /*
+       Let the browser prioritize vertical page scrolling
+       instead of treating touch input as a request to
+       manipulate the 3D scene.
+    */
+    .home-spline spline-viewer {
+      touch-action: pan-y;
+    }
+
+    /*
+       Prevent accidental image decoding from becoming part
+       of the critical first paint.
+    */
+    .location-map iframe {
+      content-visibility: auto;
+    }
+
+    /*
+       Spline is the only full-screen visual element.
+       Keep the surrounding container simple.
+    */
+    .home-section {
+      contain: layout paint;
+      isolation: isolate;
+    }
+
+
+    /* =========================================================
+       SPLINE LOADING SCREEN — FROM THE SECOND FILE
+       ========================================================= */
+
+    #spline-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      background-color: #0D0F14;
+
+      opacity: 1;
+      visibility: visible;
+
+      transition:
+        opacity 0.5s ease,
+        visibility 0.5s ease;
+    }
+
+    .loader-hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    .loader-title {
+      font-family: "Syne", sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: 5px;
+      color: #00ff87;
+      margin-bottom: 18px;
+    }
+
+    .loader-text {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #888888;
+      margin-bottom: 25px;
+    }
+
+    .loader-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .loader-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #00ff87;
+
+      animation:
+        loaderPulse
+        1.2s
+        infinite
+        ease-in-out;
+    }
+
+    .loader-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .loader-dots span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .loader-dots span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes loaderPulse {
+      0%, 80%, 100% {
+        transform: scale(0.5);
+        opacity: 0.35;
+      }
+
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Loader error */
+
+    .loader-error {
+      text-align: center;
+    }
+
+    .loader-error-title {
+      font-family: "Syne", sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: #00ff87;
+      letter-spacing: 5px;
+      margin-bottom: 15px;
+    }
+
+    .loader-error-text {
+      color: #999999;
+      font-size: 0.9rem;
+      margin-bottom: 25px;
+    }
+
+    .retry-button {
+      border: 1px solid #00ff87;
+      background: transparent;
+      color: #00ff87;
+
+      padding: 12px 24px;
+
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-weight: 700;
+      letter-spacing: 2px;
+
+      cursor: pointer;
+      border-radius: 30px;
+
+      transition: 0.2s ease;
+    }
+
+    .retry-button:hover {
+      background-color: #00ff87;
+      color: #0D0F14;
+    }
+
+    @media (max-width: 768px) {
+      .loader-title {
+        font-size: 2.2rem;
+      }
+
+      .loader-text {
+        font-size: 0.65rem;
+        letter-spacing: 3px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .loader-dots span {
+        animation: none;
+        opacity: 0.7;
+        transform: scale(0.8);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       SPLINE LOADING SCREEN
+       ========================================================= -->
+
+  <div id="spline-loader">
+
+    <div class="loader-title">
+      GAST
+    </div>
+
+    <div class="loader-text">
+      Entering the experience
+    </div>
+
+    <div class="loader-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       NAVBAR
+       ========================================================= -->
+
+  <nav class="games-navbar">
+
+    <!-- image-logo.png replaces "GAST GAMES" -->
+    <a href="INDEX.HTML" class="brand-logo">
+      <img src="logo.png" alt="GAST">
+    </a>
+
+    <div class="nav-right">
+
+      <ul class="nav-links-menu">
+
+        <li>
+          <a href="INDEX.HTML" class="nav-item">Home</a>
+        </li>
+
+        <li>
+          <a href="cinema.html" class="nav-item">Cinema</a>
+        </li>
+
+        <li>
+          <a href="games.html" class="nav-item">Games</a>
+        </li>
+
+        <li>
+          <a href="dining.html" class="nav-item">Dining</a>
+        </li>
+
+        <li>
+          <a href="https://gym.gastmall.net/" class="nav-item">Gym</a>
+        </li>
+
+        <li>
+          <a href="developers.html" class="nav-item">Developers</a>
+        </li>
+
+      </ul>
+
+      <a href="https://getus.cnetcommerce.com/" class="cinema-cta">
+        Buy Cinema Tickets
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================================================
+       HOME SPLINE
+       ========================================================= -->
+
+  <section class="home-section">
+
+    <div class="home-spline">
+
+      <!-- Replace with your actual HOME Spline URL -->
+      <spline-viewer
+        id="homeSpline"
+        url="https://prod.spline.design/9Dw7qz2plEldf1B1/scene.splinecode"
+        loading="eager"
+      >
+      </spline-viewer>
+
+    </div>
+
+    <div class="spline-logo-hider"></div>
+
+  </section>
+
+
+  <!-- =========================================================
+       INFORMATION + LOCATION
+       ========================================================= -->
+
+  <section class="location-section">
+
+    <div class="location-copy">
+
+      <h1>
+        YOUR ULTIMATE<br>
+        DESTINATION
+      </h1>
+
+      <h2>
+        GAST ENTERTAINMENT MALL
+      </h2>
+
+      <p>
+        World-class cinema technology, advanced arcade zones,<br>
+        premium culinary flavors, and fitness space under one<br>
+        roof! Explore, train, dine, and escape.
+      </p>
+
+      <div class="contact-row">
+
+        <a
+          href="tel:+251931013377"
+          class="contact-button">
+          <span class="contact-icon">☎</span>
+          +251 93 013 377
+        </a>
+
+        <a
+          href="mailto:info@gastmall.net"
+          class="contact-button">
+          <span class="contact-icon">✉</span>
+          info@gastmall.net
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="location-map">
+
+      <iframe
+        src="https://www.google.com/maps?q=GAST%20Entertainment%20Mall%2C%20Addis%20Ababa%2C%20Ethiopia&output=embed"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================================================
+       SPLINE LOADER CONTROL
+       ========================================================= -->
+
+  <script>
+  (() => {
+    const loader = document.getElementById("spline-loader");
+    const spline = document.getElementById("homeSpline");
+
+    if (!loader || !spline) return;
+
+    let finished = false;
+
+    function finishLoader() {
+      if (finished) return;
+      finished = true;
+
+      loader.classList.add("loader-hidden");
+
+      setTimeout(() => {
+        if (loader.isConnected) {
+          loader.remove();
+        }
+      }, 550);
+    }
+
+    /*
+      Spline's viewer fires this when its loading process
+      has completed.
+    */
+    spline.addEventListener("load-complete", finishLoader, {
+      once: true
+    });
+  })();
+</script>
+
+</body>
+</html>

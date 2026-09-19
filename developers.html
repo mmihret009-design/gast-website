@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GAST — Credits</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0d0f15;
+      color: #f2f2f2;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Credits screen */
+    .credits-screen {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+      );
+
+      mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+      );
+    }
+
+    /*
+      KEEP THIS EMPTY SPACE.
+      You can put your own name/details here later.
+    */
+    .top-space {
+      height: 35vh;
+    }
+
+    .credits {
+      width: min(700px, 85%);
+      margin: 0 auto;
+      text-align: center;
+
+      animation: creditsRoll 45s linear infinite;
+    }
+
+    .credit-block {
+      margin-bottom: 80px;
+    }
+
+    .role {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #00ff87;
+      margin-bottom: 16px;
+    }
+
+    .name {
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .description {
+      margin: 18px auto 0;
+      max-width: 520px;
+
+      font-size: 14px;
+      line-height: 1.8;
+      letter-spacing: 1px;
+      color: rgba(242, 242, 242, 0.65);
+    }
+
+    .section-title {
+      font-size: 16px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      color: #ffffff;
+    }
+
+    .small-text {
+      font-size: 13px;
+      line-height: 2;
+      letter-spacing: 2px;
+      color: rgba(242, 242, 242, 0.65);
+      text-transform: uppercase;
+    }
+
+    .final {
+      padding-bottom: 100px;
+    }
+
+    .final .name {
+      font-size: clamp(26px, 4vw, 44px);
+      letter-spacing: 8px;
+    }
+
+    @keyframes creditsRoll {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(-100%);
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+
+      .top-space {
+        height: 32vh;
+      }
+
+      .credit-block {
+        margin-bottom: 65px;
+      }
+
+      .role {
+        font-size: 10px;
+        letter-spacing: 4px;
+      }
+
+      .name {
+        letter-spacing: 3px;
+      }
+
+      .description {
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .credits {
+        animation-duration: 40s;
+      }
+    }
+    .games-navbar { position: fixed; top: 0; left: 0; width: 100%; height: 90px; display: flex; justify-content: flex-end; align-items: center; padding: 0 4%; z-index: 1000; background: linear-gradient( to bottom, rgba(5,5,5,0.85) 0%, rgba(5,5,5,0) 100% ); pointer-events: none; } .nav-right { display: flex; align-items: center; gap: 55px; pointer-events: auto; transform: translateY(-20px) translateX(-1px); } .nav-links-menu { display: flex; gap: 55px; list-style: none; pointer-events: auto; } .nav-item { text-decoration: none; font-family: "Space Grotesk", sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #e5e5e5; position: relative; padding: 4px 0; transition: color 0.2s ease; } .nav-item:hover { color: #00ff87; } .nav-item::after { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: #00ff87; transform: scaleX(0); transform-origin: right; transition: transform 0.3s cubic-bezier( 0.45, 0, 0.55, 1 ); } .nav-item:hover::after { transform: scaleX(1); transform-origin: left; } /* ========================================================= MOBILE — SAME AS MAIN GAST WEBSITE ========================================================= */ @media (max-width: 768px) { .games-navbar { height: 70px; padding: 0 4%; background: rgba(0,0,0,0.85); } .nav-right { gap: 12px; transform: translateY(-10px); } .nav-links-menu { gap: 12px; } .nav-item { font-size: 0.65rem; letter-spacing: 1px; } } @media (max-width: 480px) { .nav-right { gap: 7px; } .nav-links-menu { gap: 7px; } .nav-item { font-size: 0.52rem; letter-spacing: 0.5px; } }
+  </style>
+</head>
+
+<body>
+<nav class="games-navbar">
+
+  <div class="nav-right">
+
+    <ul class="nav-links-menu">
+
+      <li>
+        <a href="INDEX.HTML" class="nav-item">Home</a>
+      </li>
+
+      <li>
+        <a href="cinema.html" class="nav-item">Cinema</a>
+      </li>
+
+      <li>
+        <a href="games.html" class="nav-item">Games</a>
+      </li>
+
+      <li>
+        <a href="dining.html" class="nav-item">Dining</a>
+      </li>
+
+      <li>
+        <a href="https://gym.gastmall.net/" class="nav-item">Gym</a>
+      </li>
+
+      <li>
+        <a href="developers.html" class="nav-item">Developers</a>
+      </li>
+
+    </ul>
+
+  </div>
+
+</nav>
+  <main class="credits-screen">
+
+    <!-- RESERVED SPACE -->
+    <div class="top-space"></div>
+
+
+    <!-- MOVIE CREDITS -->
+    <div class="credits">
+
+
+      <!-- 1 -->
+      <div class="credit-block">
+
+        <div class="role">Mall Exterior Design</div>
+
+        <div class="name">
+          mdmudasir17
+        </div>
+
+        <p class="description">
+          "Mall Exterior Design"
+          (<a href="https://skfb.ly/o78Mr" target="_blank">
+            https://skfb.ly/o78Mr
+          </a>)
+          by mdmudasir17 is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+        <p class="description">
+          <a href="https://www.cgtrader.com/designers/crysec?utm_source=credit&utm_source=credit_item_page"
+             target="_blank">
+            https://www.cgtrader.com/designers/crysec
+          </a>
+        </p>
+
+      </div>
+
+
+      <!-- 2 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Pyramid
+        </div>
+
+        <p class="description">
+          "Pyramid"
+          (<a href="https://skfb.ly/6TXFW" target="_blank">
+            https://skfb.ly/6TXFW
+          </a>)
+          by quedlin is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 3 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Bowling Lane
+        </div>
+
+        <p class="description">
+          "Bowling Lane"
+          (<a href="https://skfb.ly/oCX9J" target="_blank">
+            https://skfb.ly/oCX9J
+          </a>)
+          by Beleeth is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 4 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Wild Cinema
+        </div>
+
+        <p class="description">
+          "Wild Cinema" by mednios is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 5 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Iron Paviiidon-铁馆
+        </div>
+
+        <p class="description">
+          "Iron Paviiidon-铁馆"
+          (<a href="https://skfb.ly/oTCR6" target="_blank">
+            https://skfb.ly/oTCR6
+          </a>)
+          by MrdT is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 6 -->
+      <div class="credit-block">
+
+        <div class="role">Image Asset</div>
+
+        <div class="name">
+          TORN PAPER
+        </div>
+
+        <p class="description">
+          Png TORN PAPER image from pngtree.com
+        </p>
+
+      </div>
+
+
+      <!-- 7 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Antique Rocking Chair
+        </div>
+
+        <p class="description">
+          "Antique rocking chair"
+          (<a href="https://skfb.ly/psBnH" target="_blank">
+            https://skfb.ly/psBnH
+          </a>)
+          by Javier Carceller is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 8 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Ghost Woman A-Pose
+        </div>
+
+        <p class="description">
+          "Ghost Woman A-Pose"
+          (<a href="https://skfb.ly/pDuxs" target="_blank">
+            https://skfb.ly/pDuxs
+          </a>)
+          by FLUXIUM3D is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 9 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Horror Cup
+        </div>
+
+        <p class="description">
+          "Horror Cup"
+          (<a href="https://skfb.ly/6vFvp" target="_blank">
+            https://skfb.ly/6vFvp
+          </a>)
+          by Mateus Schwaab is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 10 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Arm and Wristband
+        </div>
+
+        <p class="description">
+          "Arm and Wristband"
+          (<a href="https://skfb.ly/pDIyL" target="_blank">
+            https://skfb.ly/pDIyL
+          </a>)
+          by sselivanov061 is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 11 -->
+      <div class="credit-block">
+
+        <div class="role">Cinema Building</div>
+
+        <div class="name">
+          A-Anas97
+        </div>
+
+        <p class="description">
+          Cinema building by
+          <a href="https://www.cgtrader.com/designers/a-anas97?utm_source=credit&utm_source=credit_item_page"
+             target="_blank">
+            https://www.cgtrader.com/designers/a-anas97
+          </a>
+        </p>
+
+      </div>
+
+
+      <!-- 12 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          3D Glasses
+        </div>
+
+        <p class="description">
+          "3d Glasses"
+          (<a href="https://skfb.ly/6WPqO" target="_blank">
+            https://skfb.ly/6WPqO
+          </a>)
+          by xploid is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- 13 -->
+      <div class="credit-block">
+
+        <div class="role">3D Model</div>
+
+        <div class="name">
+          Low Poly Mobile Phone
+        </div>
+
+        <p class="description">
+          "Low Poly Mobile Phone"
+          (<a href="https://skfb.ly/owJHu" target="_blank">
+            https://skfb.ly/owJHu
+          </a>)
+          by kimmy.k is licensed under
+          Creative Commons Attribution
+          (<a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">
+            http://creativecommons.org/licenses/by/4.0/
+          </a>).
+        </p>
+
+      </div>
+
+
+      <!-- END -->
+      <div class="credit-block final">
+
+        <div class="role">Thank You</div>
+
+        <div class="name">
+          GAST
+        </div>
+
+        <p class="description">
+          Thank you for experiencing GAST Entertainment Mall.
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</body>
+</html>
+```

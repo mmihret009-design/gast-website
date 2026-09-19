@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Gast Cinema - Full Experience</title>
+
+  <!-- Load Spline viewer ONCE -->
+  <script
+    type="module"
+    src="https://unpkg.com/@splinetool/viewer@1.12.98/build/spline-viewer.js">
+  </script>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      background-color: #000000;
+      font-family: Arial, sans-serif;
+
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      scroll-behavior: smooth;
+    }
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    .cinema-navbar {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 90px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 0 4%;
+
+      z-index: 1000;
+
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(5, 5, 5, 0.8) 0%,
+          rgba(5, 5, 5, 0) 100%
+        );
+
+      pointer-events: none;
+    }
+
+    .brand-logo {
+      height: 50px;
+
+      display: flex;
+      align-items: center;
+
+      pointer-events: auto;
+    }
+
+    .brand-logo img {
+      height: 100%;
+      width: 600%;
+
+      object-fit: contain;
+
+      transform:
+        scale(4.3)
+        translateY(3px)
+        translateX(20px);
+    }
+
+    .nav-links-menu {
+      display: flex;
+
+      gap: 55px;
+
+      list-style: none;
+
+      pointer-events: auto;
+
+      transform:
+        translateY(-20px)
+        translateX(-1px);
+    }
+
+    .nav-item {
+      text-decoration: none;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Inter,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      font-size: 1.2rem;
+      font-weight: 700;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      color: #e5e5e5;
+
+      position: relative;
+
+      padding: 4px 0;
+
+      transition: color 0.2s ease;
+    }
+
+    .nav-item:hover {
+      color: #00ff87;
+    }
+
+    .nav-item::after {
+      content: '';
+
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+
+      width: 100%;
+      height: 2px;
+
+      background-color: #00ff87;
+
+      transform: scaleX(0);
+
+      transform-origin: right;
+
+      transition:
+        transform 0.3s
+        cubic-bezier(0.45, 0, 0.55, 1);
+    }
+
+    .nav-item:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+
+    /* =========================================================
+       GENERAL PAGE SECTIONS
+       ========================================================= */
+
+    .cinema-page-section {
+      position: relative;
+
+      width: 100vw;
+      height: 100vh;
+
+      overflow: hidden;
+
+      background-color: #000000;
+    }
+
+
+    /* =========================================================
+       PAGE 1 - VIDEO CAROUSEL
+       ========================================================= */
+
+    .carousel-container {
+      width: 100%;
+      height: 100%;
+
+      position: relative;
+    }
+
+    .marquee-slide-wrapper {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity 1s ease-in-out,
+        visibility 1s ease-in-out;
+
+      z-index: 1;
+    }
+
+    .marquee-slide-wrapper.active-slide {
+      opacity: 1;
+      visibility: visible;
+
+      z-index: 2;
+    }
+
+    .marquee-slide-wrapper video {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+    .text-overlay-wrapper {
+      position: absolute;
+
+      bottom: 10%;
+      left: 6%;
+
+      color: #ffffff;
+
+      z-index: 10;
+
+      text-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.9);
+
+      pointer-events: none;
+    }
+
+    .slide-info-card {
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity 0.8s ease-in-out;
+
+      width: 600px;
+    }
+
+    .slide-info-card.active-text {
+      position: relative;
+
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .slide-info-card h1 {
+      font-size: 3.5rem;
+
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-info-card p {
+      font-size: 1.2rem;
+
+      color: #e0e0e0;
+
+      letter-spacing: 1px;
+    }
+
+    .carousel-container::after {
+      content: '';
+
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+
+      width: 100%;
+      height: 35%;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.95) 0%,
+          rgba(0, 0, 0, 0) 100%
+        );
+
+      z-index: 5;
+
+      pointer-events: none;
+    }
+
+
+    /* =========================================================
+       SPLINE SECTIONS
+       ========================================================= */
+
+    .spline-inner-div {
+      position: relative;
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      background-color: #000000;
+    }
+
+    /*
+      This is the placeholder where the currently active
+      Spline viewer will be inserted.
+    */
+
+    .spline-container {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      opacity: 0;
+
+      transition: opacity 0.35s ease;
+
+      pointer-events: none;
+    }
+
+    .spline-container.active {
+      opacity: 1;
+
+      pointer-events: auto;
+    }
+
+    spline-viewer {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      touch-action: pan-y;
+    }
+
+
+    /* =========================================================
+       SPLINE LOGO HIDER
+       ========================================================= */
+
+    .spline-logo-hider-box {
+      position: absolute;
+
+      bottom: 0;
+      right: 0;
+
+      width: 170px;
+      height: 58px;
+
+      background-color: #0D0F14;
+
+      z-index: 99;
+
+      pointer-events: auto;
+    }
+
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 768px) {
+
+      .cinema-navbar {
+        height: 70px;
+
+        padding: 0 4%;
+
+        background:
+          rgba(0, 0, 0, 0.85);
+      }
+
+      .brand-logo {
+        height: 32px;
+      }
+
+      .nav-links-menu {
+        gap: 12px;
+      }
+
+      .nav-item {
+        font-size: 0.65rem;
+
+        letter-spacing: 1px;
+      }
+
+    }
+    .cinema-schedule { 
+      width: 100%; 
+      height: 100vh; 
+      min-height: 600px; 
+      position: relative; 
+      background-image: url("Schedule.jpg"); 
+      background-size: cover; 
+      background-position: left center; 
+      background-repeat: no-repeat; 
+    } 
+    .cinema-schedule-btn {
+      position: absolute; 
+      right: 18%; 
+      top: 50%; 
+      transform: translateY(-50%); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 15px 32px; 
+      background: #087fc1; 
+      color: #fff; 
+      text-decoration: none; 
+      font-family: Arial, sans-serif; 
+      font-size: 18px; 
+      font-weight: 600; 
+      border-radius: 8px; 
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); 
+      transition: 0.25s ease; 
+    } 
+    .cinema-schedule-btn:hover { 
+      background: #0a9be8; 
+      transform: translateY(-50%) scale(1.05); 
+    }
+     /* Tablet */ 
+     @media (max-width: 1000px) {
+       .cinema-schedule-btn {
+         right: 5%; 
+         padding: 13px 26px; 
+         font-size: 16px; 
+        } 
+      }
+       /* Phone */ @media (max-width: 600px) { 
+      .cinema-schedule { 
+        min-height: 500px; 
+        background-position: 28% center; 
+      } 
+      .cinema-schedule-btn { 
+        right: 5%;
+         
+        
+        transform: none; 
+        padding: 12px 22px; 
+        font-size: 15px; 
+      }
+       .cinema-schedule-btn:hover {
+         transform: scale(1.05);
+        }
+      }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================================================
+       GLOBAL NAVIGATION
+       ========================================================= -->
+
+  <nav class="cinema-navbar">
+
+    <div class="brand-logo">
+
+      <img
+        src="1logo.png"
+        alt="Gast Cinema Logo">
+
+    </div>
+
+
+    <ul class="nav-links-menu">
+
+      <li>
+        <a href="INDEX.HTML" class="nav-item">
+          Home
+        </a>
+      </li>
+
+      <li>
+        <a href="cinema.html" class="nav-item">
+          Cinema
+        </a>
+      </li>
+
+      <li>
+        <a href="games.html" class="nav-item">
+          Games
+        </a>
+      </li>
+
+      <li>
+        <a href="dining.html" class="nav-item">
+          Dining
+        </a>
+      </li>
+
+      <li>
+        <a href="https://gym.gastmall.net/" class="nav-item">
+          Gym
+        </a>
+      </li>
+
+      <li>
+        <a href="developers.html" class="nav-item">
+          Developers
+        </a>
+      </li>
+
+    </ul>
+
+  </nav>
+
+
+
+  <!-- =========================================================
+       PAGE 1 - VIDEO HERO
+       ========================================================= -->
+
+  <section class="cinema-page-section">
+
+    <main class="carousel-container">
+
+
+      <!-- Slide 1 -->
+
+      <div
+        class="marquee-slide-wrapper active-slide"
+        id="wrapper-0">
+
+        <video
+          src="1.mp4"
+          autoplay
+          loop
+          muted
+          playsinline>
+        </video>
+
+      </div>
+
+
+      <!-- Slide 2 -->
+
+      <div
+        class="marquee-slide-wrapper"
+        id="wrapper-1">
+
+        <video
+          src="2.mp4"
+          loop
+          muted
+          playsinline>
+        </video>
+
+      </div>
+
+
+      <!-- Slide 3 -->
+
+      <div
+        class="marquee-slide-wrapper"
+        id="wrapper-2">
+
+        <video
+          src="3.mp4"
+          loop
+          muted
+          playsinline>
+        </video>
+
+      </div>
+
+
+
+      <!-- TEXT -->
+
+      <div class="text-overlay-wrapper">
+
+
+        <div
+          class="slide-info-card active-text"
+          id="text-0">
+
+          <h1>
+            Spider-Man: Brand New Day
+          </h1>
+
+          <p>
+            NOW SHOWING • GAST CINEMA
+          </p>
+
+        </div>
+
+
+        <div
+          class="slide-info-card"
+          id="text-1">
+
+          <h1>
+            Obsession
+          </h1>
+
+          <p>
+            NOW SHOWING • GAST CINEMA
+          </p>
+
+        </div>
+
+
+        <div
+          class="slide-info-card"
+          id="text-2">
+
+          <h1>
+            MOANA
+          </h1>
+
+          <p>
+            NOW SHOWING • GAST CINEMA
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </main>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       PAGE 2 - SPLINE SCENE 1
+       ========================================================= -->
+
+  <section
+    class="cinema-page-section spline-section"
+    id="section-spline-1"
+    data-spline-url="https://prod.spline.design/JzExe7XZasGGm8te/scene.splinecode"
+    loading="eager">
+
+    <div class="spline-inner-div">
+
+      <!-- Spline is dynamically inserted here -->
+
+      <div class="spline-container"></div>
+
+      <div class="spline-logo-hider-box"></div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       PAGE 3 - SPLINE SCENE 2
+       ========================================================= -->
+
+  <section
+    class="cinema-page-section spline-section"
+    id="section-spline-2"
+    data-spline-url="https://prod.spline.design/xntO6GI0sGOc81ov/scene.splinecode"
+    loading="eager">
+
+    <div class="spline-inner-div">
+
+      <!-- Spline is dynamically inserted here -->
+
+      <div class="spline-container"></div>
+
+      <div class="spline-logo-hider-box"></div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================================================
+       PAGE 4 - SPLINE SCENE 3
+       ========================================================= -->
+
+  <section class="cinema-schedule"> <a href="https://getus.cnetcommerce.com/" class="cinema-schedule-btn"> Buy Tickets </a> </section>
+
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+       ========================================================= -->
+
+  <script>
+
+
+    /* =========================================================
+       VIDEO CAROUSEL
+       ========================================================= */
+
+    const videoSlides =
+      document.querySelectorAll(
+        '.marquee-slide-wrapper'
+      );
+
+    let currentActiveIndex = 0;
+
+    const slideDurationInterval = 60000;
+
+
+    setInterval(() => {
+
+
+      /*
+        Pause current video.
+      */
+
+      const outgoingVideo =
+        videoSlides[currentActiveIndex]
+          .querySelector('video');
+
+      if (outgoingVideo) {
+        outgoingVideo.pause();
+      }
+
+
+      /*
+        Remove old slide classes.
+      */
+
+      document
+        .getElementById(
+          `wrapper-${currentActiveIndex}`
+        )
+        .classList
+        .remove('active-slide');
+
+
+      document
+        .getElementById(
+          `text-${currentActiveIndex}`
+        )
+        .classList
+        .remove('active-text');
+
+
+      /*
+        Move to next slide.
+      */
+
+      currentActiveIndex =
+        (currentActiveIndex + 1)
+        % videoSlides.length;
+
+
+      /*
+        Activate new slide.
+      */
+
+      document
+        .getElementById(
+          `wrapper-${currentActiveIndex}`
+        )
+        .classList
+        .add('active-slide');
+
+
+      document
+        .getElementById(
+          `text-${currentActiveIndex}`
+        )
+        .classList
+        .add('active-text');
+
+
+      /*
+        Restart new video.
+      */
+
+      const incomingVideo =
+        videoSlides[currentActiveIndex]
+          .querySelector('video');
+
+      if (incomingVideo) {
+
+        incomingVideo.currentTime = 0;
+
+        incomingVideo
+          .play()
+          .catch(err => {
+            console.log(
+              "Waiting for user interaction",
+              err
+            );
+          });
+
+      }
+
+    }, slideDurationInterval);
+
+
+
+    /* =========================================================
+       VIDEO AUDIO ACTIVATION
+       ========================================================= */
+
+    document.body.addEventListener(
+      'click',
+      () => {
+
+        videoSlides.forEach(slide => {
+
+          const videoElement =
+            slide.querySelector('video');
+
+          if (videoElement) {
+            videoElement.muted = false;
+          }
+
+        });
+
+      },
+      {
+        once: true
+      }
+    );
+
+
+
+    /* =========================================================
+       SPLINE PERFORMANCE SYSTEM
+       ========================================================= */
+
+    const splineSections =
+      document.querySelectorAll(
+        '.spline-section'
+      );
+
+
+    /*
+      This keeps track of the ONE Spline
+      scene currently loaded.
+    */
+
+    let activeSplineSection = null;
+
+
+
+    /*
+      Completely remove the currently
+      active Spline viewer.
+    */
+
+    function unloadSpline(section) {
+
+      if (!section) {
+        return;
+      }
+
+
+      const container =
+        section.querySelector(
+          '.spline-container'
+        );
+
+
+      if (!container) {
+        return;
+      }
+
+
+      /*
+        Remove the viewer.
+
+        This is important because merely
+        setting pointer-events:none does
+        NOT necessarily stop WebGL rendering.
+      */
+
+      container.innerHTML = '';
+
+      container.classList.remove(
+        'active'
+      );
+
+    }
+
+
+
+    /*
+      Create a Spline viewer only when
+      its section becomes active.
+    */
+
+    function loadSpline(section) {
+
+      if (!section) {
+        return;
+      }
+
+
+      /*
+        If this exact section is already
+        active, do nothing.
+      */
+
+      if (activeSplineSection === section) {
+        return;
+      }
+
+
+      /*
+        Remove previous Spline scene.
+      */
+
+      if (activeSplineSection) {
+
+        unloadSpline(
+          activeSplineSection
+        );
+
+      }
+
+
+      const container =
+        section.querySelector(
+          '.spline-container'
+        );
+
+
+      const splineURL =
+        section.dataset.splineUrl;
+
+
+      if (!container || !splineURL) {
+        return;
+      }
+
+
+      /*
+        Create a completely new
+        spline-viewer element.
+      */
+
+      const viewer =
+        document.createElement(
+          'spline-viewer'
+        );
+
+
+      /*
+        Set the Spline scene.
+      */
+
+      viewer.setAttribute(
+        'url',
+        splineURL
+      );
+
+
+      /*
+        Optional loading spinner.
+      */
+
+      viewer.setAttribute(
+        'loading-anim-type',
+        'spinner-big-light'
+      );
+
+
+      /*
+        Put viewer inside this section.
+      */
+
+      container.appendChild(
+        viewer
+      );
+
+
+      /*
+        Activate this section.
+      */
+
+      container.classList.add(
+        'active'
+      );
+
+
+      /*
+        Remember which scene is active.
+      */
+
+      activeSplineSection = section;
+
+    }
+
+
+
+    /* =========================================================
+       INTERSECTION OBSERVER
+       ========================================================= */
+
+    const splineObserver =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach(entry => {
+
+            /*
+              Only load the Spline scene
+              when at least 60% of its
+              section is visible.
+            */
+
+            if (
+              entry.isIntersecting &&
+              entry.intersectionRatio >= 0.6
+            ) {
+
+              loadSpline(
+                entry.target
+              );
+
+            }
+
+          });
+
+        },
+        {
+          threshold: [0, 0.6, 1]
+        }
+      );
+
+
+
+    /*
+      Watch every Spline section.
+    */
+
+    splineSections.forEach(section => {
+
+      splineObserver.observe(
+        section
+      );
+
+    });
+
+
+
+    /* =========================================================
+       EXTRA SAFETY:
+       REMOVE SPLINE WHEN IT IS NO LONGER
+       CLOSE TO THE VIEWPORT
+       ========================================================= */
+
+    const unloadObserver =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach(entry => {
+
+            /*
+              If the currently active
+              Spline section is no longer
+              anywhere near the viewport,
+              unload it.
+            */
+
+            if (
+              !entry.isIntersecting &&
+              activeSplineSection ===
+                entry.target
+            ) {
+
+              unloadSpline(
+                entry.target
+              );
+
+              activeSplineSection =
+                null;
+
+            }
+
+          });
+
+        },
+        {
+          threshold: 0
+        }
+      );
+
+
+    splineSections.forEach(section => {
+
+      unloadObserver.observe(
+        section
+      );
+
+    });
+
+
+  </script>
+
+
+</body>
+</html>
