@@ -492,6 +492,315 @@
 
 
     /* =========================================================
+       MOBILE / TABLET CINEMA REPLACEMENT
+       ========================================================= */
+
+    .mobile-cinema-replacement {
+      display: none;
+
+      position: relative;
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 50% 45%,
+          rgba(0, 255, 135, 0.08),
+          transparent 42%
+        ),
+        #0D0F14;
+
+      color: #ffffff;
+
+      padding:
+        110px 5% 45px;
+    }
+
+    .mobile-cinema-header {
+      position: relative;
+
+      z-index: 5;
+
+      text-align: center;
+
+      margin-bottom: 35px;
+    }
+
+    .mobile-cinema-kicker {
+      color: #00FF87;
+
+      font-size: 0.75rem;
+
+      font-weight: 700;
+
+      letter-spacing: 5px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 10px;
+    }
+
+    .mobile-cinema-header h2 {
+      font-size: clamp(2rem, 7vw, 4rem);
+
+      line-height: 0.95;
+
+      font-weight: 900;
+
+      letter-spacing: -1px;
+
+      text-transform: uppercase;
+    }
+
+    .mobile-cinema-header p {
+      max-width: 600px;
+
+      margin: 15px auto 0;
+
+      color: #bcbcbc;
+
+      font-size: 0.95rem;
+
+      line-height: 1.6;
+    }
+
+
+    /* CINEMA CARDS */
+
+    .mobile-cinema-cards {
+      position: relative;
+
+      z-index: 4;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 18px;
+
+      width: min(900px, 100%);
+
+      margin: 0 auto;
+    }
+
+    .mobile-cinema-card {
+      position: relative;
+
+      height: 38vh;
+
+      min-height: 240px;
+
+      max-height: 390px;
+
+      overflow: hidden;
+
+      border-radius: 14px;
+
+      background: #080A0D;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
+
+      box-shadow:
+        0 20px 50px
+        rgba(0, 0, 0, 0.45);
+
+      isolation: isolate;
+    }
+
+    .mobile-cinema-card img {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      z-index: -2;
+
+      transition:
+        transform 0.7s ease;
+    }
+
+    .mobile-cinema-card::after {
+      content: '';
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: -1;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92) 0%,
+          rgba(0, 0, 0, 0.25) 65%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+    }
+
+    .mobile-cinema-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .mobile-cinema-card-content {
+      position: absolute;
+
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+    }
+
+    .mobile-cinema-number {
+      display: block;
+
+      color: #00FF87;
+
+      font-size: 0.7rem;
+
+      font-weight: 800;
+
+      letter-spacing: 3px;
+
+      margin-bottom: 5px;
+    }
+
+    .mobile-cinema-card h3 {
+      font-size: clamp(1.35rem, 4vw, 2rem);
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+    }
+
+    .mobile-cinema-card p {
+      color: #d0d0d0;
+
+      font-size: 0.78rem;
+
+      margin-top: 6px;
+
+      letter-spacing: 0.5px;
+    }
+
+
+    /* 3D GLASSES */
+
+    .mobile-3d-feature {
+      position: absolute;
+
+      left: 50%;
+
+      bottom: 7%;
+
+      transform:
+        translateX(-50%);
+
+      z-index: 6;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      pointer-events: none;
+    }
+
+    .mobile-3d-feature::before {
+      content: '';
+
+      position: absolute;
+
+      width: 170px;
+      height: 170px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(0, 255, 135, 0.06);
+
+      box-shadow:
+        0 0 80px
+        rgba(0, 255, 135, 0.1);
+    }
+
+    .mobile-3d-feature img {
+      width: clamp(100px, 17vw, 160px);
+
+      height: auto;
+
+      object-fit: contain;
+
+      filter:
+        drop-shadow(
+          0 15px 25px
+          rgba(0, 0, 0, 0.7)
+        );
+
+      transform:
+        rotate(-5deg);
+
+      animation:
+        glassesFloat 4s
+        ease-in-out
+        infinite;
+    }
+
+    @keyframes glassesFloat {
+
+      0%,
+      100% {
+        transform:
+          translateY(0)
+          rotate(-5deg);
+      }
+
+      50% {
+        transform:
+          translateY(-8px)
+          rotate(-2deg);
+      }
+
+    }
+
+    .mobile-3d-label {
+      position: absolute;
+
+      top: 100%;
+
+      left: 50%;
+
+      transform:
+        translateX(-50%);
+
+      margin-top: 7px;
+
+      white-space: nowrap;
+
+      color: #ffffff;
+
+      font-size: 0.62rem;
+
+      font-weight: 800;
+
+      letter-spacing: 3px;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =========================================================
        MOBILE
        ========================================================= */
 
@@ -518,6 +827,137 @@
         font-size: 0.65rem;
 
         letter-spacing: 1px;
+      }
+
+    }
+
+
+    /* =========================================================
+       TABLET + PHONE
+       FIRST SPLINE IS REPLACED
+       ========================================================= */
+
+    @media (max-width: 1000px) {
+
+      #section-spline-1 .spline-inner-div {
+        display: none;
+      }
+
+      #section-spline-1 {
+        background: #0D0F14;
+      }
+
+      .mobile-cinema-replacement {
+        display: block;
+      }
+
+    }
+
+
+    /* =========================================================
+       SMALL PHONE
+       ========================================================= */
+
+    @media (max-width: 600px) {
+
+      .mobile-cinema-replacement {
+        padding:
+          95px 4% 35px;
+      }
+
+      .mobile-cinema-header {
+        margin-bottom: 22px;
+      }
+
+      .mobile-cinema-header p {
+        font-size: 0.8rem;
+
+        line-height: 1.45;
+
+        margin-top: 10px;
+      }
+
+      .mobile-cinema-cards {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+      }
+
+      .mobile-cinema-card {
+        height: 23vh;
+
+        min-height: 145px;
+
+        max-height: 190px;
+
+        border-radius: 10px;
+      }
+
+      .mobile-cinema-card-content {
+        left: 14px;
+        right: 14px;
+        bottom: 13px;
+      }
+
+      .mobile-cinema-number {
+        font-size: 0.58rem;
+
+        letter-spacing: 2px;
+      }
+
+      .mobile-cinema-card h3 {
+        font-size: 1.15rem;
+      }
+
+      .mobile-cinema-card p {
+        font-size: 0.68rem;
+
+        margin-top: 3px;
+      }
+
+      .mobile-3d-feature {
+        bottom: 5%;
+      }
+
+      .mobile-3d-feature img {
+        width: 105px;
+      }
+
+      .mobile-3d-feature::before {
+        width: 125px;
+        height: 125px;
+      }
+
+      .mobile-3d-label {
+        font-size: 0.52rem;
+        transform: translateY(-20px);
+        
+        letter-spacing: 2px;
+      }
+
+    }
+
+
+    /* =========================================================
+       VERY SMALL PHONES
+       ========================================================= */
+
+    @media (max-width: 380px) {
+
+      .mobile-cinema-header h2 {
+        font-size: 1.8rem;
+      }
+
+      .mobile-cinema-header p {
+        font-size: 0.72rem;
+      }
+
+      .mobile-cinema-card {
+        min-height: 130px;
+      }
+
+      .mobile-3d-feature img {
+        width: 85px;
       }
 
     }
@@ -809,7 +1249,6 @@
   </div>
 
 
-
   <!-- TEXT -->
 
   <div class="text-overlay-wrapper">
@@ -868,7 +1307,7 @@
   </section>
 
   <!-- =========================================================
-       PAGE 2 - SPLINE SCENE 1
+       PAGE 2 - SPLINE SCENE 1 / MOBILE REPLACEMENT
        ========================================================= -->
 
   <section
@@ -877,11 +1316,113 @@
     data-spline-url="https://prod.spline.design/JzExe7XZasGGm8te/scene.splinecode">
 
 ```
+<!-- DESKTOP SPLINE -->
+
 <div class="spline-inner-div">
 
   <div class="spline-container"></div>
 
   <div class="spline-logo-hider-box"></div>
+
+</div>
+
+
+<!-- MOBILE / TABLET REPLACEMENT -->
+
+<div class="mobile-cinema-replacement">
+
+  <div class="mobile-cinema-header">
+
+    <div class="mobile-cinema-kicker">
+      GAST CINEMA
+    </div>
+
+    <h2>
+      Two Screens.<br>
+      One Experience.
+    </h2>
+
+    <p>
+      Enjoy regular screenings across Cinema 1 and Cinema 2,
+      with selected movies also available in immersive 3D.
+    </p>
+
+  </div>
+
+
+  <div class="mobile-cinema-cards">
+
+
+    <!-- CINEMA 1 -->
+
+    <article class="mobile-cinema-card">
+
+      <img
+        src="cinema1.webp"
+        alt="GAST Cinema 1">
+
+      <div class="mobile-cinema-card-content">
+
+        <span class="mobile-cinema-number">
+          SCREEN 01
+        </span>
+
+        <h3>
+          Cinema 1
+        </h3>
+
+        <p>
+          Regular & selected 3D screenings
+        </p>
+
+      </div>
+
+    </article>
+
+
+    <!-- CINEMA 2 -->
+
+    <article class="mobile-cinema-card">
+
+      <img
+        src="cinema2.jpg"
+        alt="GAST Cinema 2">
+
+      <div class="mobile-cinema-card-content">
+
+        <span class="mobile-cinema-number">
+          SCREEN 02
+        </span>
+
+        <h3>
+          Cinema 2
+        </h3>
+
+        <p>
+          Regular & selected 3D screenings
+        </p>
+
+      </div>
+
+    </article>
+
+
+  </div>
+
+
+  <!-- 3D GLASSES -->
+
+  <div class="mobile-3d-feature">
+
+    <img
+      src="3dglasses.png"
+      alt="3D Glasses">
+
+    <div class="mobile-3d-label">
+      3D EXPERIENCE
+    </div>
+
+  </div>
 
 </div>
 ```
@@ -1089,6 +1630,14 @@
       );
 
 
+    /*
+      First Spline:
+      Only load on desktop.
+
+      Second Spline:
+      Load on all screen sizes.
+    */
+
     function loadSpline(section) {
 
       const container =
@@ -1159,11 +1708,37 @@
 
 
     /* =========================================================
-       LOAD BOTH SPLINE SCENES
+       LOAD SPLINE SCENES
        ========================================================= */
 
     splineSections.forEach(
-      section => {
+      (section, index) => {
+
+        /*
+          First Spline = desktop only.
+        */
+
+        if (index === 0) {
+
+          if (
+            window.matchMedia(
+              '(min-width: 1001px)'
+            ).matches
+          ) {
+
+            loadSpline(section);
+
+          }
+
+          return;
+
+        }
+
+
+        /*
+          Second Spline remains
+          available everywhere.
+        */
 
         loadSpline(section);
 
